@@ -12,9 +12,28 @@ export interface Lead {
 // Store leads in localStorage
 const LEADS_KEY = "royal_safa_leads"
 
+// Migration: Clear old data format if it exists
+const migrateLeads = () => {
+  if (typeof window === "undefined") return
+  try {
+    const stored = localStorage.getItem(LEADS_KEY)
+    if (stored) {
+      const data = JSON.parse(stored)
+      // Check if it has old field names (name, eventDate, eventCity, etc.)
+      if (Array.isArray(data) && data.length > 0 && data[0].name && !data[0].fullName) {
+        // Old format detected, clear it
+        localStorage.removeItem(LEADS_KEY)
+      }
+    }
+  } catch (error) {
+    console.error("Migration error:", error)
+  }
+}
+
 export const getLeads = (): Lead[] => {
   if (typeof window === "undefined") return []
   try {
+    migrateLeads() // Run migration on each read
     const stored = localStorage.getItem(LEADS_KEY)
     return stored ? JSON.parse(stored) : []
   } catch (error) {
