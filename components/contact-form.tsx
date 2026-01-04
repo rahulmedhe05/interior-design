@@ -47,7 +47,7 @@ export function ContactForm() {
     `.trim()
 
     // Replace with your WhatsApp number (include country code without + sign)
-    const whatsappNumber = "919876543210"
+    const whatsappNumber = "916353583148"
     const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`
 
     // Open WhatsApp

@@ -47,7 +47,7 @@ export function WhatsAppFloat() {
     `.trim()
 
     // Replace with your actual WhatsApp number (with country code, no + or spaces)
-    const whatsappNumber = "919725295692"
+    const whatsappNumber = "916353583148"
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`
 
     // Open WhatsApp

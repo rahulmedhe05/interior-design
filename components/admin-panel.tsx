@@ -48,15 +48,16 @@ export function AdminPanel() {
     : leads
 
   const exportToCSV = () => {
-    const headers = ["Name", "Wedding Date", "City", "No. of Safas", "Preference", "Submitted At"]
+    const headers = ["Name", "Phone Number", "Property Type", "City", "Budget", "Preference", "Submitted At"]
     const csvContent = [
       headers.join(","),
       ...filteredLeads.map((lead) =>
         [
-          `"${lead.name}"`,
-          lead.eventDate,
-          `"${lead.eventCity}"`,
-          lead.quantity,
+          `"${lead.fullName}"`,
+          lead.phoneNumber,
+          `"${lead.propertyType}"`,
+          `"${lead.city}"`,
+          `"${lead.budget}"`,
           `"${lead.preference}"`,
           new Date(lead.submittedAt).toLocaleString(),
         ].join(",")
@@ -177,9 +178,10 @@ export function AdminPanel() {
               <thead>
                 <tr className="border-b">
                   <th className="text-left py-3 px-4 font-semibold">Name</th>
-                  <th className="text-left py-3 px-4 font-semibold">Wedding Date</th>
+                  <th className="text-left py-3 px-4 font-semibold">Phone Number</th>
+                  <th className="text-left py-3 px-4 font-semibold">Property Type</th>
                   <th className="text-left py-3 px-4 font-semibold">City</th>
-                  <th className="text-right py-3 px-4 font-semibold">No. of Safas</th>
+                  <th className="text-left py-3 px-4 font-semibold">Budget</th>
                   <th className="text-left py-3 px-4 font-semibold">Preference</th>
                   <th className="text-left py-3 px-4 font-semibold">Submitted</th>
                 </tr>
@@ -188,10 +190,11 @@ export function AdminPanel() {
                 {filteredLeads.length > 0 ? (
                   filteredLeads.map((lead) => (
                     <tr key={lead.id} className="border-b hover:bg-muted/50">
-                      <td className="py-3 px-4 font-medium">{lead.name}</td>
-                      <td className="py-3 px-4">{lead.eventDate}</td>
-                      <td className="py-3 px-4">{lead.eventCity}</td>
-                      <td className="py-3 px-4 text-right font-semibold text-primary">{lead.quantity}</td>
+                      <td className="py-3 px-4 font-medium">{lead.fullName}</td>
+                      <td className="py-3 px-4">{lead.phoneNumber}</td>
+                      <td className="py-3 px-4">{lead.propertyType}</td>
+                      <td className="py-3 px-4">{lead.city}</td>
+                      <td className="py-3 px-4">{lead.budget || "—"}</td>
                       <td className="py-3 px-4 truncate max-w-xs">{lead.preference || "—"}</td>
                       <td className="py-3 px-4 text-xs text-muted-foreground">
                         {new Date(lead.submittedAt).toLocaleDateString()}
@@ -200,7 +203,7 @@ export function AdminPanel() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={6} className="py-8 text-center text-muted-foreground">
+                    <td colSpan={7} className="py-8 text-center text-muted-foreground">
                       No leads found
                     </td>
                   </tr>
